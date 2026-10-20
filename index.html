@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b2a96">
+<meta name="description" content="PuppyCare Management: an alpha demo of bookings and vaccination checks for owner-run dog daycares in Ireland.">
+<title>PuppyCare Management</title>
+<style>
+:root{
+  --ink:#1c2329; --muted:#5a5568; --bg:#f5f0fa; --card:#fff; --line:#d6cde3;
+  --brand:#5b2a96; --brand-2:#b0268a; --pink:#d6408f; --lilac:#e6d9f5;
+  --red:#b3261e; --amber:#8a5a00;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+button,input,a{font:inherit;touch-action:manipulation}
+.top{background:linear-gradient(90deg,var(--brand) 0%,var(--brand-2) 55%,var(--pink) 100%);border-bottom:5px solid #ff8fc8;color:#fff;padding:12px 0;padding-top:calc(12px + env(safe-area-inset-top))}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-weight:800;font-size:20px}
+.pill{background:#ffd6ee;color:var(--brand);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:800;letter-spacing:.05em;white-space:nowrap}
+.hero{padding:28px 0 10px}
+.kicker{display:inline-block;background:var(--lilac);color:var(--brand);border-radius:999px;padding:4px 12px;font-size:15px;font-weight:700;margin:0 0 12px}
+h1{font-size:30px;line-height:1.2;margin:0 0 12px}
+.sub{font-size:19px;color:var(--muted);margin:0 0 18px}
+h2{font-size:25px;line-height:1.25;margin:0 0 10px;color:var(--brand)}
+h3{font-size:20px;margin:0 0 4px}
+section{padding:22px 0}
+.btn{display:block;width:100%;min-height:60px;padding:12px 16px;font-size:20px;font-weight:800;border-radius:14px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;text-align:center;text-decoration:none}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn:active{transform:scale(.985)}
+.btns{display:grid;gap:12px}
+.quote{border-left:6px solid var(--pink);background:#fff;border-radius:0 14px 14px 0;padding:14px 16px;margin:12px 0;font-size:19px}
+.label{display:inline-block;background:#fff7d6;color:#4a3b00;border:1px solid #c9a400;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800;letter-spacing:.03em}
+/* How it works: timeline (option B2) */
+.steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:s}
+.steps li{position:relative;counter-increment:s;padding:0 0 26px 58px}
+.steps li:last-child{padding-bottom:4px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:20px;display:grid;place-items:center;box-shadow:0 0 0 4px var(--bg);z-index:1}
+.steps li::after{content:"";position:absolute;left:19.5px;top:42px;bottom:0;width:3px;background:repeating-linear-gradient(var(--pink) 0 6px,transparent 6px 12px)}
+.steps li:last-child::after{display:none}
+.steps b{display:flex;align-items:center;gap:10px;margin-bottom:4px;min-height:42px}
+.steps b .ico{width:40px;height:40px;flex:none}
+/* What works today: sticker cards (option A1) */
+.sticker{position:relative;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:24px 16px 10px;margin:30px 0 0;box-shadow:6px 6px 0 var(--brand)}
+.sticker .tab{position:absolute;top:-18px;left:14px;margin:0;background:var(--pink);color:#fff;border:3px solid var(--ink);border-radius:999px;padding:2px 14px;font-weight:800;font-size:17px;line-height:1.5}
+.sticker ul{list-style:none;margin:0;padding:0}
+.sticker li{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px}
+.sticker.soon{background:#f1eaf8;border-style:dashed;box-shadow:6px 6px 0 var(--pink)}
+.sticker.soon .tab{background:#fff;color:var(--ink)}
+.mk{width:24px;height:24px;flex:none;margin-top:3px}
+/* Prices: sticker prices (option B1) */
+.pr{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 6px 0 0}
+.pc{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px 10px;text-align:center;box-shadow:5px 5px 0 var(--pink)}
+.big{font-size:34px;font-weight:800;line-height:1.1;color:var(--brand)}
+.big small{display:block;font-size:15px;font-weight:600;color:var(--muted);margin-top:4px}
+.trial{margin:20px 6px 0 0;background:#ffd6ee;border:3px dashed var(--ink);border-radius:18px;padding:10px 14px}
+.trial h3{margin:0 0 2px}
+.trial p{margin:0;font-size:16px;font-style:italic}
+label{display:block;font-weight:700;margin:0 0 6px}
+input[type=email]{width:100%;min-height:58px;padding:8px 12px;font-size:20px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink)}
+.note{color:var(--muted);font-size:16px}
+.fine{font-size:14px}
+.head{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+.head h2{margin:0}
+.head .ico{width:56px;height:56px;flex:none}
+.hero-pic{margin:4px auto 20px;max-width:340px}
+.hero-pic svg{display:block;width:100%;height:auto}
+.thanks{background:#e1f0e6;border:2px solid #2f7d4a;border-radius:14px;padding:14px 16px;font-weight:700}
+form{margin-top:14px}
+form .btn{margin-top:12px}
+footer{background:#fff;border-top:3px solid var(--lilac);padding:20px 0 calc(24px + env(safe-area-inset-bottom));margin-top:20px}
+footer a{color:var(--brand);font-weight:800;font-size:19px}
+footer p{margin:10px 0 0}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">PuppyCare Management</div>
+    <span class="pill">ALPHA</span>
+  </div>
+</header>
+
+<main>
+
+<div class="wrap">
+  <section class="hero" aria-labelledby="promise">
+    <p class="kicker">For owner-run dog daycares in Ireland</p>
+    <h1 id="promise">Say goodbye to scattered paper records, one simple system for your daycare&rsquo;s bookings and vaccination checks.</h1>
+    <p class="sub">PuppyCare is made for daycares that still take bookings by text, social media, phone and in person, and keep paper records.</p>
+    <div class="hero-pic"><svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" role="img" aria-label="Scattered papers turning into one tidy system"><title>Scattered papers turning into one tidy system</title><rect x="2" y="2" width="196" height="116" rx="24" fill="#e6d9f5" stroke="#1c2329" stroke-width="3"/><g transform="rotate(-24 31.0 57.0)"><rect x="18" y="40" width="26" height="34" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="7"/><rect x="18" y="40" width="26" height="34" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="3"/><path d="M23.72 48.84h14.560000000000002 M23.72 57.0h14.560000000000002 M23.72 65.16h8.84" stroke="#d6408f" stroke-width="3" stroke-linecap="round" fill="none"/></g><g transform="rotate(14 50.0 41.0)"><rect x="37" y="24" width="26" height="34" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="7"/><rect x="37" y="24" width="26" height="34" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="3"/><path d="M42.72 32.84h14.560000000000002 M42.72 41.0h14.560000000000002 M42.72 49.16h8.84" stroke="#b0268a" stroke-width="3" stroke-linecap="round" fill="none"/></g><g transform="rotate(-5 43.0 71.0)"><rect x="30" y="54" width="26" height="34" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="7"/><rect x="30" y="54" width="26" height="34" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="3"/><path d="M35.72 62.84h14.560000000000002 M35.72 71.0h14.560000000000002 M35.72 79.16h8.84" stroke="#d6408f" stroke-width="3" stroke-linecap="round" fill="none"/></g><path d="M70 78 C86 40 104 40 124 66" stroke="#1c2329" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M121 51 L124 66 L110 62" stroke="#1c2329" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 78 C86 40 104 40 124 66" stroke="#d6408f" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M121 51 L124 66 L110 62" stroke="#d6408f" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="30" r="3" fill="#b0268a"/><circle cx="100" cy="24" r="2" fill="#d6408f"/><circle cx="72" cy="40" r="2" fill="#d6408f"/><rect x="130" y="20" width="56" height="80" rx="9" fill="#1c2329" stroke="#1c2329" stroke-width="8"/><rect x="130" y="20" width="56" height="80" rx="9" fill="#ffffff" stroke="#5b2a96" stroke-width="4"/><circle cx="146" cy="40" r="6" fill="#d6408f"/><path d="M143 40 l2.4 2.6 4.6 -5" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M158 40 h20" stroke="#5b2a96" stroke-width="4" stroke-linecap="round"/><circle cx="146" cy="58" r="6" fill="#d6408f"/><path d="M143 58 l2.4 2.6 4.6 -5" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M158 58 h20" stroke="#5b2a96" stroke-width="4" stroke-linecap="round"/><circle cx="146" cy="76" r="6" fill="#d6408f"/><path d="M143 76 l2.4 2.6 4.6 -5" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M158 76 h20" stroke="#5b2a96" stroke-width="4" stroke-linecap="round"/></svg></div>
+    <div class="btns">
+      <a class="btn primary" id="try-demo-top" href="https://sarah-19970108.github.io/PuppyCare_Demo/" target="_blank" rel="noopener">Try the demo</a>
+      <a class="btn" href="#waitlist">Join the Waiting List</a>
+    </div>
+    <p class="note">The demo is an alpha with made-up sample dogs and owners.</p>
+  </section>
+
+  <section aria-labelledby="problem">
+    <div class="head"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e6d9f5" stroke="#1c2329" stroke-width="3"/><g transform="rotate(-24 34.0 74.0)"><rect x="12" y="46" width="44" height="56" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="8"/><rect x="12" y="46" width="44" height="56" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="4"/><path d="M21.68 60.56h24.64 M21.68 74.0h24.64 M21.68 87.44h14.96" stroke="#d6408f" stroke-width="4" stroke-linecap="round" fill="none"/></g><g transform="rotate(16 80.0 42.0)"><rect x="58" y="14" width="44" height="56" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="8"/><rect x="58" y="14" width="44" height="56" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="4"/><path d="M67.68 28.560000000000002h24.64 M67.68 42.0h24.64 M67.68 55.44h14.96" stroke="#b0268a" stroke-width="4" stroke-linecap="round" fill="none"/></g><g transform="rotate(-4 56.0 84.0)"><rect x="34" y="56" width="44" height="56" rx="4" fill="#1c2329" stroke="#1c2329" stroke-width="8"/><rect x="34" y="56" width="44" height="56" rx="4" fill="#ffffff" stroke="#5b2a96" stroke-width="4"/><path d="M43.68 70.56h24.64 M43.68 84.0h24.64 M43.68 97.44h14.96" stroke="#d6408f" stroke-width="4" stroke-linecap="round" fill="none"/></g></svg><h2 id="problem">The problem, in a daycare owner&rsquo;s words</h2></div>
+    <div class="quote">
+      &ldquo;We struggle to keep track of how many dogs are due in on any given day. Medical records are on paper, so they&rsquo;re easily overlooked, and if the handwriting is hard to read, a dog whose vaccines aren&rsquo;t up to date could slip through and infect others.&rdquo;
+    </div>
+  </section>
+
+  <section aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <ol class="steps">
+      <li><div><b><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#ffd6ee" stroke="#1c2329" stroke-width="3"/><rect x="18" y="24" width="84" height="78" rx="12" fill="#1c2329" stroke="#1c2329" stroke-width="9"/><rect x="18" y="24" width="84" height="78" rx="12" fill="#ffffff" stroke="#5b2a96" stroke-width="5"/><path d="M20.5 36 A12 12 0 0 1 32.5 26.5 H87.5 A12 12 0 0 1 99.5 36 V50 H20.5 Z" fill="#5b2a96"/><rect x="36" y="14" width="8" height="20" rx="4" fill="#d6408f" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/><rect x="76" y="14" width="8" height="20" rx="4" fill="#d6408f" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/><rect x="30" y="58" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="46" y="58" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="62" y="58" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="78" y="58" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="30" y="72" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="46" y="72" width="12" height="10" rx="3" fill="#d6408f"/><rect x="62" y="72" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="78" y="72" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="30" y="86" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="46" y="86" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="62" y="86" width="12" height="10" rx="3" fill="#e6d9f5"/><rect x="78" y="86" width="12" height="10" rx="3" fill="#e6d9f5"/></svg>Book a spot</b>Pick a day for a dog. PuppyCare checks there is room and that the vaccinations are in date, and offers the nearest day with room if the day is full.</div></li>
+      <li><div><b><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e6d9f5" stroke="#1c2329" stroke-width="3"/><circle cx="60" cy="60" r="34" fill="#d6408f" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/><path d="M44 61 L55 72 L77 48" stroke="#1c2329" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M44 61 L55 72 L77 48" stroke="#ffffff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Check in</b>Vaccination status shows at a glance when the dog arrives: amber when one expires within 14 days, red when one has expired, and an expired dog cannot be checked in.</div></li>
+      <li><div><b><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e6d9f5" stroke="#1c2329" stroke-width="3"/><g fill="#5b2a96" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"><ellipse cx="33" cy="54" rx="9" ry="12" transform="rotate(-24 33 54)"/><ellipse cx="49" cy="37" rx="9" ry="12.5" transform="rotate(-8 49 37)"/><ellipse cx="71" cy="37" rx="9" ry="12.5" transform="rotate(8 71 37)"/><ellipse cx="87" cy="54" rx="9" ry="12" transform="rotate(24 87 54)"/></g><path d="M60 58 C45 58 31 75 36 87 C40 97 51 94 60 94 C69 94 80 97 84 87 C89 75 75 58 60 58 Z" fill="#d6408f" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/></svg>Get updates</b>Staff tap once to log what each dog did (ate, walked, played, napped), and owners see their own dog&rsquo;s day on Pupdate instead of calling or messaging.</div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="status">
+    <h2 id="status">What works today</h2>
+    <div class="sticker">
+      <h3 class="tab">This is what it does</h3>
+      <ul>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d6408f" stroke="#1c2329" stroke-width="2.5"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bookings with a daily limit of 40 places and a vaccination check</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d6408f" stroke="#1c2329" stroke-width="2.5"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>The nearest day with room offered when a day is full</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d6408f" stroke="#1c2329" stroke-width="2.5"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Red and amber vaccination warnings, with check-in blocked for red</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d6408f" stroke="#1c2329" stroke-width="2.5"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>One-tap notes: ate, walked, played, napped</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d6408f" stroke="#1c2329" stroke-width="2.5"/><path d="M7 12.5l3.2 3.2L17 8.8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Pupdate: an owner sees only their own dog&rsquo;s day</span></li>
+      </ul>
+    </div>
+    <div class="sticker soon">
+      <h3 class="tab">Coming Soon</h3>
+      <ul>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#1c2329" stroke-width="2.5" stroke-dasharray="4 3"/></svg><span>Private pages or logins for each owner (the demo uses a switcher to pick an owner)</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#1c2329" stroke-width="2.5" stroke-dasharray="4 3"/></svg><span>Notifications sent to owners&rsquo; phones</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#1c2329" stroke-width="2.5" stroke-dasharray="4 3"/></svg><span>Sharing data between devices (the demo saves in one browser only)</span></li>
+        <li><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#1c2329" stroke-width="2.5" stroke-dasharray="4 3"/></svg><span>Taking payments</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="pricing">
+    <h2 id="pricing">Prices*</h2>
+    <div class="pr">
+      <div class="pc"><div class="big">&euro;150<small>one-off set-up fee</small></div></div>
+      <div class="pc"><div class="big">&euro;50<small>per month</small></div></div>
+    </div>
+    <div class="trial">
+      <h3>The Free Trial</h3>
+      <p>The first month is a free trial. When the trial ends, the &euro;50 monthly fee is charged and a separate invoice for the &euro;150 set-up fee is sent, to be paid within 14 days.</p>
+    </div>
+  </section>
+
+  <section id="waitlist" aria-labelledby="join">
+    <div class="head"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e6d9f5" stroke="#1c2329" stroke-width="3"/><g fill="#5b2a96" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"><ellipse cx="33" cy="54" rx="9" ry="12" transform="rotate(-24 33 54)"/><ellipse cx="49" cy="37" rx="9" ry="12.5" transform="rotate(-8 49 37)"/><ellipse cx="71" cy="37" rx="9" ry="12.5" transform="rotate(8 71 37)"/><ellipse cx="87" cy="54" rx="9" ry="12" transform="rotate(24 87 54)"/></g><path d="M60 58 C45 58 31 75 36 87 C40 97 51 94 60 94 C69 94 80 97 84 87 C89 75 75 58 60 58 Z" fill="#d6408f" stroke="#1c2329" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/></svg><h2 id="join">Join the Waiting List</h2></div>
+    <p>PuppyCare is waiting for you.*</p>
+    <button class="btn primary" id="open-form" type="button" aria-expanded="false" aria-controls="wl-form">Join the Waiting List</button>
+    <form id="wl-form" method="dialog" hidden>
+      <label for="email">Email address</label>
+      <input id="email" type="email" required autocomplete="off" placeholder="name@example.com">
+      <p class="note">This form is a demonstration only. Nothing you type is sent or saved anywhere.</p>
+      <button class="btn primary" type="submit">Submit</button>
+    </form>
+    <div class="thanks" id="thanks" role="status" hidden>Thank you for joining our list.</div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="notes.html">Behind the Build</a>
+    <p class="note fine">Notes on PuppyCare Management alpha creation. All data is fictional.</p>
+    <p class="note fine">* PuppyCare is not live yet, and the prices shown are planned. Join the Waiting List to hear when it is ready to try for your daycare.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var openBtn = document.getElementById('open-form');
+  var form = document.getElementById('wl-form');
+  var thanks = document.getElementById('thanks');
+  var email = document.getElementById('email');
+  openBtn.addEventListener('click', function () {
+    var show = form.hidden;
+    form.hidden = !show;
+    openBtn.setAttribute('aria-expanded', String(show));
+    if (show) email.focus();
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();               // nothing is sent anywhere
+    if (!email.checkValidity()) { email.reportValidity(); return; }
+    form.reset();                     // nothing is kept
+    form.hidden = true;
+    openBtn.hidden = true;
+    thanks.hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
