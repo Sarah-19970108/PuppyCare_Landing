@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#5b2a96">
+<title>Behind the build</title>
+<style>
+:root{--ink:#1c2329;--muted:#5a5568;--brand:#5b2a96;--brand-2:#b0268a;--pink:#d6408f;--lilac:#f1eaf8;--line:#d6cde3}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(90deg,var(--brand) 0%,var(--brand-2) 60%,var(--pink) 100%);border-bottom:5px solid #ff8fc8;color:#fff;padding:20px 16px}
+header div,main,footer div{max-width:720px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:26px;line-height:1.2}
+header p{margin:0;color:#ffe3f3;font-size:17px}
+main{padding:8px 16px 24px}
+h2{font-size:23px;margin:34px 0 8px;padding-top:6px;border-top:3px solid var(--lilac);color:var(--brand)}
+h3{font-size:19px;margin:22px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:24px}
+li{margin:6px 0}
+a{color:var(--brand);font-weight:600;overflow-wrap:anywhere}
+.note{color:var(--muted);font-size:16px}
+.quote{border-left:5px solid var(--pink);background:var(--lilac);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+.tag{display:inline-block;background:var(--lilac);color:var(--brand);border-radius:999px;padding:2px 10px;font-size:14px;font-weight:700}
+.test{border:2px solid var(--line);border-radius:14px;padding:4px 14px 10px;margin:12px 0}
+footer{border-top:3px solid var(--lilac);padding:16px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Case H: Waggy Tails Dog Daycare</h1>
+    <p>Behind the build: my notes for the demo and the landing page</p>
+  </div>
+</header>
+
+<main>
+
+<h2>CA2 – Hunch (before AI)</h2>
+<p>The person who would pay for a service like this is a small / medium sized pet care company. Specifically either a day / over night kennel, groomers or a dog care company that does both.</p>
+<p>Pricing could vary for different things:</p>
+<ul>
+  <li>Day rate for care: 75 euro per dog</li>
+  <li>Overnight rate for care 120 euro per dog</li>
+  <li>Grooming only: 50 euro</li>
+  <li>Groom &amp; overnight stay: 130 per dog</li>
+</ul>
+
+<h2>Niche details</h2>
+
+<h3>Who they are</h3>
+<p>Owner-run doggy daycare based in Ireland that manages bookings through multiple streams such as text messaging apps, social media, phone, or in-person call-ins.</p>
+
+<h3>What kind of technology this is</h3>
+<p>A booking and daily-care management system (a web app) with vaccination checks and an owner update page.</p>
+
+<h3>How they handle this job today</h3>
+<p>Booking currently happens through various methods, which makes daily tracking hard and leads to an oversubscription risk. Paper medical records can also increase infection risk daycare-wide.</p>
+
+<h3>Buyer</h3>
+<p>The buyer would be the owner-operator of the business who has the authority to spend business funds on purchasing the product we build.</p>
+
+<h3>Users</h3>
+<p>The users are the day-to-day staff of the business sending messages to various pet owners. Staff can also check dogs in on the app and when they do, the dog's personal file is pulled up where it states at first glance the vaccination status of the dog. This allows the staff to inform the pet owner of the vaccination status, so if they need to book a vet visit they can do so within the 14 days. Staff log what each dog did, whether they went for a walk, were in the playpen with other dogs, or napped, on Pupdate. This allows the owner to check what their dog or dogs are doing without bombarding the doggy daycare with phone calls or various messages.</p>
+
+<h3>Pain line <span class="tag">invented</span></h3>
+<div class="quote">&ldquo;We struggle to keep track of how many dogs are due in on any given day. Medical records are on paper, so they&rsquo;re easily overlooked, and if the handwriting is hard to read, a dog whose vaccines aren&rsquo;t up to date could slip through and infect others.&rdquo;</div>
+
+<h2>Real products that already do part of this</h2>
+
+<h3>MoeGo</h3>
+<p>MoeGo is a pet daycare and grooming management platform. It keeps vaccination records and sends automatic alerts to keep owners aware.</p>
+<p>Link: <a href="https://www.moego.pet/" rel="noopener">https://www.moego.pet/</a><br>Date checked: Monday 19 October 2026</p>
+
+<h3>Gingr</h3>
+<p>Gingr is kennel and boarding software. It checks vaccination records before each day starts and sends updates to owners, with photos of their dog attached.</p>
+<p>Link: <a href="https://www.gingrapp.com/" rel="noopener">https://www.gingrapp.com/</a><br>Date checked: Monday 19 October 2026</p>
+
+<h2>Pricing <span class="tag">assumption</span></h2>
+<p><strong>Set-up fee:</strong> &euro;150<br><strong>Monthly price:</strong> &euro;50 per month</p>
+<p>The company will have a &euro;150 set-up fee plus a &euro;50 monthly subscription, with a one-month free trial. When the trial ends, the &euro;50 is charged and an invoice for the set-up fee is sent, requesting payment within 14 days.</p>
+<p><strong>Reasoning:</strong> My reasoning for this assumption and pricing strategy is that it ensures the platform is funded accurately for the work it does, while also keeping in mind the customer by not instantly charging the set-up fee and requesting it separately. Pricing is set lower due to the niche, which is business owners who do not already use software and are transitioning from a paper record format.</p>
+
+<h2>PRD (Product Requirements Document)</h2>
+<ol>
+  <li><strong>Hypothesis:</strong> We believe that doggy daycare owners will be able to use the service to ensure accurate record keeping and prevent oversubscription. Through joining the waiting list, they will be informing the company that they want to be contacted to start the free trial.</li>
+  <li><strong>Audience:</strong> The landing page is designed for small doggy daycare owners who are transitioning from paper records and multiple communication streams to one electronic platform.</li>
+  <li><strong>Call to action:</strong> A &ldquo;Join the waiting list&rdquo; button will show at the bottom of the page. Once the email is entered in the field and the client clicks submit, a &ldquo;Thank you for joining our list&rdquo; message appears. The form does not send or store any data.</li>
+  <li><strong>How success is measured:</strong> Success will be measured initially by the number of sign-ups to the waiting list. Further to this, a secondary measure will be how many people who come across the site choose to view the demo page.</li>
+  <li><strong>Out of scope:</strong> Our page does not cover payment processing and is not suitable for groomers or overnight boarding type companies. Also, it is designed solely for one-location businesses, so multi-location businesses are not in the targeted scope.</li>
+</ol>
+
+<h2>Alpha test</h2>
+<p class="note">I tested the demo on my phone, going through it the way the daycare staff would.</p>
+
+<div class="test">
+  <h3>Test 1: Booking a dog on a full day</h3>
+  <p>I clicked Bonnie (Ita) and tried to book her on a day that is fully subscribed. It did not allow me to do so, and a pop-up came up showing the next availability for Bonnie to be booked into. I then tested the button in the pop-up and it auto turned green. I checked the box for the next day and the number of places available had decreased, and Bonnie was recorded as due to be at the daycare on the new day.</p>
+</div>
+
+<div class="test">
+  <h3>Test 2: Red (blocked) dog</h3>
+  <p>First on the list, I tested Bailey (Seán). Bailey's core booster was out of date. The check-in box was greyed out, and when tapped multiple times nothing happened.</p>
+</div>
+
+<div class="test">
+  <h3>Test 3: Amber check-in</h3>
+  <p>I tested two dogs. No warnings popped up to remind staff that the 14 days before expiry had started.</p>
+</div>
+
+<div class="test">
+  <h3>Test 4: Vaccines in date</h3>
+  <p>Checking in Alfie worked as it should. The four action buttons work, and the timestamp does show, along with which button was selected.</p>
+</div>
+
+<div class="test">
+  <h3>Test 5: Pupdate page</h3>
+  <p>Works as anticipated.</p>
+</div>
+
+<div class="test">
+  <h3>Test 6: Cancellation</h3>
+  <p>Works as anticipated, with an added surprise feature. The double-tap feature does work.</p>
+</div>
+
+<h3>General notes for amendments during the tests</h3>
+<ol>
+  <li><strong>Test 1:</strong> On the Bookings tab, when you click a specific date, the page should auto-scroll to the list of dogs booked in that day, or open it like a new tab.</li>
+  <li><strong>Test 2: Change made.</strong> The amber box on the Today tab was renamed &ldquo;Review&rdquo; so staff can see at a glance that a record needs reviewing. This change is in the second version of the demo.</li>
+  <li><strong>Test 3:</strong> Make sure there is an actual warning pop-up. Also add a note that is made when the warning is selected, to show which employee acknowledged it. The acknowledgement confirms the employee informed the pet owner at check-in that the vaccines expire within 14 days. This recommendation should be in a future version. It is not expected in this alpha mockup.</li>
+  <li><strong>Test 4:</strong> Usability: make sure that all staff know to be in the &ldquo;All&rdquo; view to be able to see every dog. In any other view, the dog just disappears from the list on the Today tab.</li>
+  <li><strong>Test 5:</strong> No general notes.</li>
+  <li><strong>Test 6:</strong> Added bonus: the second cancel button times out, which allows for accidental clicks.</li>
+</ol>
+
+</main>
+
+<footer>
+  <div><p class="note"><a href="index.html">Back to the product page</a></p></div>
+</footer>
+</body>
+</html>
